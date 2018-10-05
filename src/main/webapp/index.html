@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="fr">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<title>Accueil</title>
+</head>
+
+<body>
+
+	<div class="container">
+
+
+		<div class="col-10 mx-auto">
+			<div class="row d-flex flex-column">
+
+				<h1 class="text-primary mx-auto">Bienvenue dans votre
+					Application</h1>
+
+				<br> <br>
+				<form method="post" action="client">
+
+					<div class="form-group">
+						<label for="agence">Numéro d'agence</label> <input name="agence"
+							type="text" class="form-control" id="agence"
+							placeholder="ex:1111" required>
+					</div>
+
+					<div class="form-group">
+						<label for="numCl">Numero de Client</label> <input name="num"
+							type="text" class="form-control" id="num"
+							placeholder="ex:123456789" required>
+					</div>
+					<div class="form-group">
+						<label for="civ">civilité</label> <input name="civ" type="text"
+							class="form-control" id="civ" placeholder="ex:mr/mme/mlle"
+							required>
+					</div>
+					<div class="form-group">
+						<label for="nom">Nom</label> <input name="nom" type="text"
+							class="form-control" id="nom" placeholder="ex:DUPOND" required>
+					</div>
+
+					<div class="form-group">
+						<label for="prenom">Prénom</label> <input name="prenom"
+							type="text" class="form-control" id="prenom"
+							placeholder="ex:Albert" required>
+					</div>
+
+					<div class="form-group">
+						<label for="adresse">Adresse</label> <input name="adresse"
+							type="text" class="form-control" id="adresse"
+							placeholder="ex:3 rue des oranges" required>
+					</div>
+
+					<div class="form-group">
+						<label for="adresse2">Complement d'adresse</label> <input
+							name="adresse2" type="text" class="form-control" id="adresse2"
+							placeholder="ex:bt 8 porte 5">
+					</div>
+					<div class="form-row">
+						<div class="form-group">
+							<label for="cp">Code postal</label> <input name="cp" type="text"
+								class="form-control" id="cp" placeholder="ex:75000" required>
+						</div>
+						<div class="form-group">
+							<label for="ville">Ville</label> <input name="ville" type="text"
+								class="form-control" id="ville" placeholder="ex:Paris" required>
+						</div>
+					</div>
+
+					<div class="form-row">
+						<div class="form-group">
+							<label for="type">Type de transaction</label> <input name="type"
+								type="text" class="form-control" id="type"
+								placeholder="ex:D/C">
+						</div>
+						<div class="form-group">
+							<label for="montant">Montant (€)</label> <input name="montant"
+								type="text" class="form-control" id="montant"
+								placeholder="ex:22">
+						</div>
+
+						<div class="form-group">
+							<label for="date">Date</label> <input name="date" type="text"
+								class="form-control" id="date" placeholder="ex:2018-09-08">
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="desc">Commentaire</label> <input name="desc"
+							type="text" class="form-control" id="desc"
+							placeholder="ex:Détail de votre Operation">
+
+					</div>
+
+					<div class="form-group">
+						<label for="actuelSolde">Solde Actuel (€)</label> <input
+							name="actuelSolde" type="text" class="form-control"
+							id="actuelSolde" placeholder="ex:1500">
+					</div>
+					<div class="form-group">
+						<label for="ancienSolde">Solde Ancien (€)</label> <input
+							name="ancienSolde" type="text" class="form-control"
+							id="ancienSolde" placeholder="ex:1500">
+					</div>
+
+					<button type="submit" class="btn btn-primary mb-2">Valider</button>
+				</form>
+			</div>
+
+
+		</div>
+	</div>
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+		crossorigin="anonymous"></script>
+</body>
+</html>
