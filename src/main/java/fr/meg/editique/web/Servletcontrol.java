@@ -84,6 +84,7 @@ public class Servletcontrol extends HttpServlet {
 
 		} catch (JAXBException e) {
 			e.printStackTrace();
+			throw new IOException("erreur d'ecriture xml");
 		}
 
 		/**
