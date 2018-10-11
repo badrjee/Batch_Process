@@ -31,12 +31,12 @@ public class Servletcontrol extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-//	@Override
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-//			throws ServletException, IOException {
-////		this.getServletContext().getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
-//		throw new IOException("GET GET GUT");
-//	}
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+//		this.getServletContext().getRequestDispatcher("/WEB-INF/views/index.jsp").forward(request, response);
+		throw new IOException("GET GET GUT");
+	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -48,7 +48,7 @@ public class Servletcontrol extends HttpServlet {
 		DataFile datafile = new DataFile();
 		Client c = new Client();
 		Entree r = new Entree();
-		
+
 		c.setAgence(Integer.parseInt(request.getParameter("agence")));
 		c.setCiv(request.getParameter("civ"));
 		c.setNom(request.getParameter("nom"));
@@ -64,18 +64,20 @@ public class Servletcontrol extends HttpServlet {
 		r.setMontant(Double.parseDouble(request.getParameter("montant")));
 		r.setSoldeActuel(Double.parseDouble(request.getParameter("actuelSolde")));
 		r.setSoldeAncien(Double.parseDouble(request.getParameter("ancienSolde")));
-		
+
 		c.getReleve().add(r);
-		
+
 		datafile.setClient(c);
-		
-		//l'objet data est utiliser pour crée un fichier PDF "test.xml et pour le convertir en bite
+
+//SOLLUTION 1
+		// l'objet data est utiliser pour crée un fichier PDF "test.xml et pour le
+		// convertir en bite
 		File data = new File("C:\\Users\\Badr Azeri\\Desktop\\EWS\\temp\\test.xml");
 
 		try {
 
 			JAXBContext jaxbContext = JAXBContext.newInstance(DataFile.class);
-			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();	
+			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
 
 			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 			jaxbMarshaller.marshal(datafile, data);
@@ -84,15 +86,14 @@ public class Servletcontrol extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		
-		
 		/**
 		 * 2--preparer la requete a envoyer en SOAP:
 		 */
 		EwsComposeRequest wsr = new EwsComposeRequest();
 
 		/**
-		 * 2.1--convertir un fihcier XML en Bite pour etre utiliser dans le setDriver de a requete SOAP
+		 * 2.1--convertir un fihcier XML en Bite pour etre utiliser dans le setDriver de
+		 * a requete SOAP
 		 */
 		// init array with file length
 		byte[] bytesArray = new byte[(int) data.length()];
@@ -117,35 +118,33 @@ public class Servletcontrol extends HttpServlet {
 		wsr.setOutputFile(new Output());
 		wsr.setPubFile("ExstreamPackage.pub");
 
+		/**
+		 * les paramettre de chaque setter se trouve dans le fichier ews-config.xml dans
+		 * (C:\Users\Badr\Desktop\apache-tomcat-8.5.33\webapps\EngineService\WEB-INF)
+		 */
+
 		EngineOption eOption = new EngineOption();
-		EngineOption eOption1 = new EngineOption();
-		EngineOption eOption2 = new EngineOption();
-		
-		//les paramettre de chaque setter se trouve dans le fichier ews-config.xml dans (C:\Users\Badr Azeri\Desktop\apache-tomcat-8.5.33\webapps\EngineService\WEB-INF)
 		eOption.setName("RUNMODE");
 		eOption.setValue("PRODUCTION");
-		
-		eOption1.setName("FILEMAP");
-		eOption1.setValue("REF_Agences,C:\\Users\\Badr Azeri\\Desktop\\Formation\\REF_Agences.csv");
-		
-		eOption2.setName("OUTPUTDIRECTORY");
-		eOption2.setValue("C:\\Users\\Badr Azeri\\Desktop\\EWS\\output\\");
-		
 		wsr.getEngineOptions().add(eOption);
+
+		EngineOption eOption1 = new EngineOption();
+		eOption1.setName("FILEMAP");
+		eOption1.setValue("REF_Agences,C:\\Users\\Badr\\Desktop\\EWS\\REF_Agences.csv");
 		wsr.getEngineOptions().add(eOption1);
-		wsr.getEngineOptions().add(eOption2);
 
-		
+		// ont utilise eOption2 pour stocker les fichier de sortie mais la page ne sera
+		// pas afficher dans le navigateur web si cette variable est utiliser
+//		EngineOption eOption2 = new EngineOption();
+//		eOption2.setName("OUTPUTDIRECTORY");
+//		eOption2.setValue("C:\\Users\\Badr\\Desktop\\EWS\\output\\");
+//		wsr.getEngineOptions().add(eOption2);
 
-		
-		
 		/**
 		 * 3--appel le service web SOAP
 		 */
 		EngineService es = new EngineService(new URL("http://localhost:8080/EngineService/EngineService?wsdl"));
 
-		
-		
 		/**
 		 * 4--SOAP envoi la reponse en format de fichier pdf "application/pdf"
 		 */
@@ -176,8 +175,83 @@ public class Servletcontrol extends HttpServlet {
 			throw new IOException("erreur d'appel a EWS");
 		}
 
-		// instruction pour le redirct (dnas notre cas ont a pas besoin d'un rederct
+//SOLLUTION 2
+
+//		byte[] table ; 
+//		try {
+//			
+//			JAXBContext jaxbContext = JAXBContext.newInstance(DataFile.class);
+//			Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
+//			
+//			File dataFile = new File("C:\\Users\\Nadir Boutra\\Desktop\\CustomData.xml");
+//			StringWriter data = new StringWriter() ; 
+//			StringBuffer buffer = new StringBuffer() ;
+//			
+//			jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+//			jaxbMarshaller.marshal(datas, dataFile);
+//			jaxbMarshaller.marshal(datas, data);
+//			buffer = data.getBuffer();
+//			table = buffer.toString().getBytes() ;
+//			
+//		} catch (JAXBException e) {
+//          e.printStackTrace();
+//          throw new IOException("erreur d'ecriture xml") ;
+//		}
+//		
+//		DriverFile df = new DriverFile();
+//		df.setFileName("FILEINPUT");
+//		df.setDriver(table);
+//	
+//		
+//		EwsComposeRequest req = new EwsComposeRequest() ;
+//		req.setDriver(df);  // A completer 
+////		req.setDriverEncoding("");         // A completer 
+//		                                  // Engine Options
+//		                                  // fileReturnRegEx
+//		req.setIncludeHeader(true);      // A verifier
+//		req.setIncludeMessageFile(true);  // true 
+//		
+////        Output o = new Output() ; 
+////		Output o1 = new Output() ; 
+////		
+////		o1.setFileName("o_afp");
+////		o.setFileName("o_pdf");
+////		o.setDirectory("C:\\Users\\Nadir Boutra\\Desktop\\EWS\\Output");
+////		o1.setDirectory("C:\\Users\\Nadir Boutra\\Desktop\\EWS\\Output");
+////		req.setOutputFile(new Output());  // A completer
+////		req.setOutputFile(o1);  // A completer
+////		req.setOutputFile(o);  // A completer
+//		
+//		req.setPubFile("Communication1.pub");               // A completer
+//		EngineOption eOption = new EngineOption() ;
+//		eOption.setName("RUNMODE");
+//		eOption.setValue("PRODUCTION");
+//		EngineOption eOption1 = new EngineOption() ;
+//		eOption1.setName("FILEMAP");
+//		eOption1.setValue("REF_DBAgence,C:\\Users\\Nadir Boutra\\Desktop\\formation\\REF_DBAgence.csv");
+//		req.getEngineOptions().add(eOption);
+//		req.getEngineOptions().add(eOption1);
+//		
+//		EngineService es = new EngineService(new URL("http://localhost:8080/EngineService/EngineService?wsdl"));
+//		EwsComposeResponse res ;
+//		try {
+//			res = es.getEngineServicePort().compose(req);
+//			System.out.println(new String (res.getEngineMessage()));
+//			System.out.println(res.getFiles().size());
+//			PrintWriter output = response.getWriter();
+//			response.setContentType("application/pdf");
+//			output.print(new String (res.getFiles().get(1).getFileOutput() ));
+//		} catch (EngineServiceException_Exception e) {
+//			
+//			e.printStackTrace();
+//			throw new IOException("erreur d'appel a EWS") ;
+//		}
+
+		/**
+		 * instruction pour le redirect (dnas notre cas ont a pas besoin d'un redirect
+		 */
 		// response.sendRedirect(this.getServletContext().getContextPath() + "/client");
 	}
 
 }
+
